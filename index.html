@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=3840, initial-scale=1.0">
+<title>Ominbo — Webinar Slide Deck 4K</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── TOKENS ── */
+  :root {
+    --navy:   #0D1B2A;
+    --ink:    #1A2840;
+    --teal:   #00C9A7;
+    --teal-d: #00A88B;
+    --blue:   #2563EB;
+    --sky:    #E8F4FD;
+    --slate:  #64748B;
+    --mist:   #F0F6FF;
+    --white:  #FFFFFF;
+    --gold:   #F59E0B;
+    --text:   #1E293B;
+    --sub:    #475569;
+
+    /* 4K base: 3840 × 2160, each slide is 3840px wide, 2160px tall */
+    /* --sw: 3840px; */
+    --sw: 1920px;
+    --sh: 1000px;
+
+    font-size: 32px; /* 1rem = 32px so everything scales from here */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0f1a;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── SLIDE SHELL ── */
+  .deck { display: flex; flex-direction: column; gap: 0; }
+
+  .slide {
+    width: var(--sw);
+    min-height: var(--sh);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 200px;
+    page-break-after: always;
+  }
+
+  /* ── SLIDE BACKGROUNDS ── */
+  .bg-navy  { background: var(--navy); }
+  .bg-white { background: var(--white); }
+  .bg-mist  { background: var(--mist); }
+  .bg-ink   { background: var(--ink); }
+  .bg-teal-grad {
+    background: linear-gradient(135deg, #0D1B2A 0%, #0E3448 60%, #003D3B 100%);
+  }
+  .bg-light-grad {
+    background: linear-gradient(160deg, #EEF6FF 0%, #F5FFFD 100%);
+  }
+
+  /* ── DECORATIVE BLOBS ── */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(200px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .blob-teal  { background: var(--teal);  }
+  .blob-blue  { background: var(--blue);  }
+  .blob-gold  { background: var(--gold);  }
+
+  /* ── SLIDE NUMBER ── */
+  .slide-num {
+    position: absolute;
+    bottom: 80px;
+    right: 120px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .slide-num.dark { color: rgba(0,0,0,0.2); }
+
+  /* ── LOGO MARK ── */
+  .logo-mark {
+    position: absolute;
+    top: 80px;
+    left: 120px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .logo-icon {
+    width: 72px; height: 72px;
+    background: var(--teal);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 800; color: var(--navy);
+  }
+  .logo-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .logo-text.dark { color: var(--navy); }
+  .logo-text span { color: var(--teal); }
+
+  /* ── EYEBROW ── */
+  .eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 36px;
+  }
+
+  /* ── HEADLINE SIZES ── */
+  .h-hero {
+    font-family: 'Sora', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .h-xl {
+    font-family: 'Sora', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  .h-lg {
+    font-family: 'Sora', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .h-md {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .text-white { color: var(--white); }
+  .text-teal  { color: var(--teal);  }
+  .text-navy  { color: var(--navy);  }
+  .text-slate { color: var(--slate); }
+  .text-sub   { color: var(--sub);   }
+  .text-gold  { color: var(--gold);  }
+
+  /* ── BODY COPY ── */
+  .body-lg {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    max-width: 1400px;
+  }
+  .body-lg.dark { color: var(--sub); }
+  .body-md {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+  }
+  .body-md.dark { color: var(--sub); }
+
+  /* ── TEAL HIGHLIGHT ── */
+  .hi { color: var(--teal); }
+  .hi-blue { color: var(--blue); }
+
+  /* ── PILL TAG ── */
+  .pill {
+    display: inline-block;
+    background: rgba(0,201,167,0.15);
+    color: var(--teal);
+    border: 1.5px solid rgba(0,201,167,0.3);
+    border-radius: 100px;
+    padding: 10px 32px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .pill.blue {
+    background: rgba(37,99,235,0.12);
+    color: #60A5FA;
+    border-color: rgba(37,99,235,0.25);
+  }
+  .pill.gold {
+    background: rgba(245,158,11,0.12);
+    color: var(--gold);
+    border-color: rgba(245,158,11,0.25);
+  }
+
+  /* ── CTA BUTTON ── */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--teal);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 28px 64px;
+    border-radius: 16px;
+    letter-spacing: -0.01em;
+    margin-top: 60px;
+  }
+  .cta-arrow { font-size: 1.2rem; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 120px; height: 5px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    border-radius: 3px;
+    margin: 40px 0;
+  }
+  .divider.center { margin: 40px auto; }
+
+  /* ── STAT BLOCK ── */
+  .stat-row {
+    display: flex;
+    gap: 120px;
+    margin-top: 80px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--teal);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 12px;
+  }
+
+  /* ── FEATURE CARD ── */
+  .cards-grid {
+    display: grid;
+    gap: 48px;
+    width: 100%;
+    margin-top: 80px;
+  }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 32px;
+    padding: 64px 56px;
+  }
+  .card.dark {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+  }
+  .card-icon {
+    width: 96px; height: 96px;
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+  }
+  .icon-teal { background: rgba(0,201,167,0.15); }
+  .icon-blue { background: rgba(37,99,235,0.12); }
+  .icon-gold { background: rgba(245,158,11,0.12); }
+  .icon-rose { background: rgba(239,68,68,0.1); }
+  .icon-violet { background: rgba(139,92,246,0.1); }
+
+  .card-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--white);
+  }
+  .card-title.dark { color: var(--navy); }
+  .card-body {
+    font-size: 0.8rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.6);
+  }
+  .card-body.dark { color: var(--sub); }
+
+  /* ── PROCESS STEPS ── */
+  .process-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 80px;
+    width: 100%;
+  }
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 0 48px;
+    position: relative;
+  }
+  .process-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 72px;
+    right: -2%;
+    width: 4%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+  }
+  .step-num {
+    width: 144px; height: 144px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: var(--navy);
+    font-family: 'Sora', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 48px;
+    box-shadow: 0 0 80px rgba(0,201,167,0.3);
+  }
+  .step-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .step-body {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+  }
+
+  /* ── CHANNEL LOGO ROW ── */
+  .channel-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 56px;
+    margin-top: 72px;
+    flex-wrap: wrap;
+  }
+  .ch-badge {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 20px 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .ch-dot {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 56px;
+    margin-top: 80px;
+    width: 100%;
+  }
+  .testi-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 32px;
+    padding: 64px 56px;
+  }
+  .testi-stars { color: var(--gold); font-size: 1.1rem; letter-spacing: 4px; margin-bottom: 32px; }
+  .testi-quote {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.75);
+    font-style: italic;
+    margin-bottom: 48px;
+  }
+  .testi-author {
+    display: flex; align-items: center; gap: 24px;
+  }
+  .testi-avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 700; color: var(--navy);
+  }
+  .testi-name {
+    font-weight: 700; font-size: 0.85rem; color: var(--white);
+  }
+  .testi-role {
+    font-size: 0.7rem; color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+  }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+    margin-top: 80px;
+    width: 100%;
+  }
+  .price-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 32px;
+    padding: 64px 48px;
+    position: relative;
+  }
+  .price-card.featured {
+    background: var(--teal);
+    border-color: var(--teal);
+    transform: scale(1.03);
+  }
+  .price-card.featured * { color: var(--navy) !important; }
+  .price-badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 8px 28px;
+    border-radius: 100px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .price-tier {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+  }
+  .price-amount {
+    font-family: 'Sora', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .price-period {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 48px;
+  }
+  .price-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .check { color: var(--teal); font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+
+  /* ── AGENDA SLIDE ── */
+  .agenda-list {
+    list-style: none;
+    margin-top: 80px;
+    width: 100%;
+    max-width: 2400px;
+  }
+  .agenda-list li {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 48px 80px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    transition: background .2s;
+  }
+  .agenda-list li:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+  .agenda-num {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    min-width: 80px;
+  }
+  .agenda-title {
+    font-weight: 600;
+    color: var(--white);
+    flex: 1;
+  }
+  .agenda-time {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SPLIT LAYOUT ── */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 160px;
+    width: 100%;
+    align-items: center;
+  }
+  .split.wide { grid-template-columns: 1.2fr 0.8fr; }
+
+  /* ── PROBLEM LIST ── */
+  .problem-list { list-style: none; margin-top: 48px; }
+  .problem-list li {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.65;
+  }
+  .px { color: #EF4444; font-size: 1.1rem; flex-shrink: 0; }
+  .check-big { color: var(--teal); font-size: 1.1rem; flex-shrink: 0; margin-top: 4px; }
+
+  /* ── MOCK INBOX ── */
+  .inbox-mock {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 32px;
+    overflow: hidden;
+    width: 100%;
+  }
+  .inbox-topbar {
+    background: rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .topbar-dot { width: 20px; height: 20px; border-radius: 50%; }
+  .td1 { background: #FF5F57; }
+  .td2 { background: #FEBC2E; }
+  .td3 { background: #28C840; }
+  .topbar-label {
+    margin-left: 24px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+  }
+  .inbox-body { padding: 40px 48px; }
+  .inbox-row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 24px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .inbox-row.active {
+    background: rgba(0,201,167,0.1);
+    border-color: rgba(0,201,167,0.2);
+  }
+  .inbox-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; color: var(--navy);
+  }
+  .inbox-meta { flex: 1; }
+  .inbox-sender { font-size: 0.75rem; font-weight: 600; color: var(--white); }
+  .inbox-preview { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-top: 6px; }
+  .inbox-badge {
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 100px;
+  }
+  .badge-ai { background: rgba(0,201,167,0.2); color: var(--teal); }
+  .badge-urgent { background: rgba(239,68,68,0.2); color: #F87171; }
+  .badge-done { background: rgba(34,197,94,0.2); color: #4ADE80; }
+  .inbox-ch { font-size: 1.1rem; }
+
+  /* ── CLOSING ── */
+  .closing-center { text-align: center; max-width: 2400px; }
+  .big-url {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-top: 64px;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── QR PLACEHOLDER ── */
+  .qr-box {
+    width: 240px; height: 240px;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 40px auto 0;
+  }
+
+  /* ── TIMELINE / COMPARISON ── */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 80px;
+    width: 100%;
+  }
+  .compare-col {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 32px;
+    padding: 64px 56px;
+  }
+  .compare-col.highlight {
+    background: rgba(0,201,167,0.06);
+    border-color: rgba(0,201,167,0.2);
+  }
+  .compare-head {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .compare-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.65);
+  }
+
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 1 · TITLE / HERO
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-teal-grad">
+    <div class="blob blob-teal" style="width:1400px;height:1400px;top:-400px;right:-300px;"></div>
+    <div class="blob blob-blue" style="width:1000px;height:1000px;bottom:-200px;left:-200px;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="text-align:center; z-index:1; max-width:2800px;">
+      <div class="pill" style="margin-bottom:56px;">Live Webinar · Product Demo</div>
+      <div class="h-hero text-white" style="margin-bottom:48px;">
+        Stop Drowning in Inboxes.<br>
+        Let <span class="hi">AI</span> Sort, Draft & Send.
+      </div>
+      <p class="body-lg" style="text-align:center; margin:0 auto; max-width:2000px;">
+        A complete walkthrough of <strong style="color:var(--white)">Ominbo</strong> — the AI-powered omnichannel inbox that connects every channel, prioritises every message, and drafts every reply. You just approve.
+      </p>
+
+      <div class="stat-row" style="justify-content:center;">
+        <div class="stat-item">
+          <div class="stat-num">7+</div>
+          <div class="stat-label">Channels in one inbox</div>
+        </div>
+        <div class="stat-item" style="border-left:1px solid rgba(255,255,255,0.12); border-right:1px solid rgba(255,255,255,0.12); padding:0 120px;">
+          <div class="stat-num">&lt;2 min</div>
+          <div class="stat-label">To the first email reply</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">AI incl.</div>
+          <div class="stat-label">No add-on required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">01 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 2 · AGENDA
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-navy">
+    <div class="blob blob-teal" style="width:800px;height:800px;top:-200px;right:-100px;opacity:0.1;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="width:100%; max-width:2800px; z-index:1;">
+      <div class="eyebrow">Today's Webinar</div>
+      <div class="h-xl text-white">What We'll Cover</div>
+      <div class="divider"></div>
+
+      <ul class="agenda-list">
+        <li>
+          <span class="agenda-num">01</span>
+          <span class="agenda-title">The Inbox Problem — Why Your Current Setup Is Failing</span>
+          <span class="agenda-time">5 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">02</span>
+          <span class="agenda-title">Introducing Ominbo — One Inbox, Every Channel, Full AI</span>
+          <span class="agenda-time">5 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">03</span>
+          <span class="agenda-title">How It Works — Connect → Analyse → Approve</span>
+          <span class="agenda-time">5 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">04</span>
+          <span class="agenda-title">Live Demo — See the AI Draft Replies in Real Time</span>
+          <span class="agenda-time">10 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">05</span>
+          <span class="agenda-title">Key Features Deep-Dive — 9 Capabilities That Change Everything</span>
+          <span class="agenda-time">8 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">06</span>
+          <span class="agenda-title">Customer Success Stories</span>
+          <span class="agenda-time">4 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">07</span>
+          <span class="agenda-title">Pricing, Free Trial & Next Steps</span>
+          <span class="agenda-time">3 MIN</span>
+        </li>
+        <li>
+          <span class="agenda-num">Q&amp;A</span>
+          <span class="agenda-title">Open Questions</span>
+          <span class="agenda-time">10 MIN</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="slide-num">02 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 3 · THE PROBLEM
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-ink">
+    <div class="blob blob-blue" style="width:1000px;height:1000px;bottom:-300px;right:-200px;opacity:0.12;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div class="split" style="z-index:1; max-width:3400px; width:100%;">
+      <div>
+        <div class="eyebrow">Sound Familiar?</div>
+        <div class="h-xl text-white">Your inbox is <span class="hi">out of control</span> and your team is losing.</div>
+        <div class="divider"></div>
+        <ul class="problem-list">
+          <li><span class="px">✕</span> Flooded with emails, WhatsApp, Instagram & Slack messages — all in different apps, all siloed.</li>
+          <li><span class="px">✕</span> Replies take forever. Writing the same responses every single day, losing hours you'll never get back.</li>
+          <li><span class="px">✕</span> Rules and automations that don't actually help — they don't understand context or urgency.</li>
+          <li><span class="px">✕</span> No overview of what's urgent. Customers wait. Deals slip. Revenue walks out the door.</li>
+          <li><span class="px">✕</span> Onboarding new agents takes days — there's no institutional knowledge built into the tools.</li>
+        </ul>
+      </div>
+      <div>
+        <!-- Visual chaos illustration -->
+        <div style="position:relative; height:800px;">
+          <div style="position:absolute; top:0; left:0; right:0; bottom:0; display:flex; flex-direction:column; gap:24px; padding:40px; background:rgba(239,68,68,0.04); border:1px solid rgba(239,68,68,0.15); border-radius:32px; overflow:hidden;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;font-weight:700; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.07);">BEFORE OMINBO</div>
+            <div class="inbox-row" style="background:rgba(239,68,68,0.08); border-color:rgba(239,68,68,0.15);">
+              <div class="inbox-ch">📧</div>
+              <div class="inbox-avatar" style="background:#FFB3B3;">S</div>
+              <div class="inbox-meta"><div class="inbox-sender">Sarah K. — EMAIL</div><div class="inbox-preview">Your order hasn't arrived yet, it's been 2 weeks...</div></div>
+              <div class="inbox-badge badge-urgent">URGENT</div>
+            </div>
+            <div class="inbox-row" style="background:rgba(239,68,68,0.06);">
+              <div class="inbox-ch">💬</div>
+              <div class="inbox-avatar" style="background:#B3D8FF;">M</div>
+              <div class="inbox-meta"><div class="inbox-sender">Marcus T. — WHATSAPP</div><div class="inbox-preview">Hey, can I reschedule my demo to Thursday?</div></div>
+              <div class="inbox-badge badge-urgent">UNREAD</div>
+            </div>
+            <div class="inbox-row">
+              <div class="inbox-ch">📸</div>
+              <div class="inbox-avatar" style="background:#FFE0B3;">L</div>
+              <div class="inbox-meta"><div class="inbox-sender">Lena R. — INSTAGRAM</div><div class="inbox-preview">Love your product! Do you ship to Germany?</div></div>
+              <div class="inbox-badge badge-urgent">3 DAYS OLD</div>
+            </div>
+            <div class="inbox-row">
+              <div class="inbox-ch">📧</div>
+              <div class="inbox-avatar" style="background:#D8B3FF;">J</div>
+              <div class="inbox-meta"><div class="inbox-sender">James P. — EMAIL</div><div class="inbox-preview">Invoice #4421 — need a correction urgently</div></div>
+              <div class="inbox-badge badge-urgent">URGENT</div>
+            </div>
+            <div style="text-align:center; padding:32px; border:1px dashed rgba(239,68,68,0.3); border-radius:16px; color:rgba(239,68,68,0.6); font-size:0.75rem; font-weight:600; margin-top:auto;">
+              ⚠️ 47 more unread messages across 5 apps
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">03 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 4 · SOLUTION INTRO
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-teal-grad">
+    <div class="blob blob-teal" style="width:1200px;height:1200px;top:-300px;left:-300px;opacity:0.2;"></div>
+    <div class="blob blob-blue" style="width:900px;height:900px;bottom:-200px;right:-100px;opacity:0.15;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="text-align:center; z-index:1; max-width:2800px;">
+      <div class="eyebrow">The Solution</div>
+      <div class="h-hero text-white" style="margin-bottom:48px;">
+        Introducing <span class="hi">Ominbo</span>
+      </div>
+      <p class="body-lg" style="text-align:center; margin:0 auto; max-width:2200px;">
+        Ominbo connects <strong style="color:var(--white)">every inbox</strong> — email, WhatsApp, Instagram, Slack, Facebook, Amazon, Telegram — into one intelligent workspace. AI analyses every message for urgency and topic, then pre-writes your replies using your knowledge base. <strong style="color:var(--teal)">You just approve.</strong>
+      </p>
+
+      <div class="channel-row" style="margin-top:120px;">
+        <div class="ch-badge"><div class="ch-dot" style="background:#EA4335;">📧</div> Email</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#25D366;">💬</div> WhatsApp</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#E1306C;">📸</div> Instagram</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#1877F2;">👤</div> Facebook</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#229ED9;">✈️</div> Telegram</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#FF9900;">🛒</div> Amazon</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#4A154B;">🎯</div> Slack</div>
+        <div class="ch-badge"><div class="ch-dot" style="background:#0D1B2A;">+</div> More</div>
+      </div>
+
+      <div style="margin-top:100px; padding:56px 80px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.12); border-radius:32px; display:inline-block;">
+        <div style="font-size:1.2rem; font-weight:700; color:var(--white); letter-spacing:-0.01em;">
+          "Every channel in one place. AI sorts by importance and pre-writes replies — you just approve."
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">04 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 5 · HOW IT WORKS
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-navy">
+    <div class="blob blob-blue" style="width:800px;height:800px;top:-100px;right:-200px;opacity:0.12;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="width:100%; max-width:3200px; z-index:1; text-align:center;">
+      <div class="eyebrow">From Chaos to First Reply — in 3 Steps</div>
+      <div class="h-xl text-white">How It Works</div>
+      <div class="divider center"></div>
+
+      <div class="process-row">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-title">Connect Your Inbox</div>
+          <p class="step-body">Connect your mailboxes via IMAP, SMTP, or OAuth — plus WhatsApp, Instagram, Facebook, Telegram, Slack, and Amazon — in under 2 minutes. No developers needed.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-title">AI Analyses & Drafts</div>
+          <p class="step-body">Ominbo reads each message, identifies language, urgency, and topic, then drafts a precise reply drawn from your knowledge base — personalised to the customer.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-title">Approve or Auto-Send</div>
+          <p class="step-body">Review the AI draft and click Send — or set confidence thresholds to send automatically when the AI is highly confident. You stay in control at every level.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:100px; display:flex; justify-content:center;">
+        <div class="pill">Try it free today → ominbo.com</div>
+      </div>
+    </div>
+
+    <div class="slide-num">05 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 6 · LIVE DEMO INTRO
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-ink">
+    <div class="blob blob-teal" style="width:1000px;height:1000px;top:-200px;left:-200px;opacity:0.1;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div class="split" style="z-index:1; max-width:3400px; width:100%;">
+      <div>
+        <div class="eyebrow">Product Demo</div>
+        <div class="h-xl text-white">The Ominbo Inbox — <span class="hi">Live</span></div>
+        <div class="divider"></div>
+        <p class="body-lg" style="margin-bottom:64px;">Watch the AI triage a real inbox: urgency scoring, auto-translation, reply drafting, and one-click send — all happening in a single view.</p>
+        <ul class="problem-list">
+          <li><span class="check-big">✓</span> Messages ranked by AI-assessed urgency automatically</li>
+          <li><span class="check-big">✓</span> AI reply drafted in the customer's language</li>
+          <li><span class="check-big">✓</span> Approve in one click — or auto-send on high confidence</li>
+          <li><span class="check-big">✓</span> Full message history across every channel in one thread</li>
+        </ul>
+      </div>
+      <div>
+        <!-- Demo inbox mock -->
+        <div class="inbox-mock">
+          <div class="inbox-topbar">
+            <div class="topbar-dot td1"></div>
+            <div class="topbar-dot td2"></div>
+            <div class="topbar-dot td3"></div>
+            <div class="topbar-label">Ominbo — All Channels Inbox</div>
+          </div>
+          <div class="inbox-body">
+            <div class="inbox-row active">
+              <div class="inbox-ch">📧</div>
+              <div class="inbox-avatar" style="background:#B3F0E6; color:#005A4E;">S</div>
+              <div class="inbox-meta">
+                <div class="inbox-sender">Sarah K. · Email · 2 min ago</div>
+                <div class="inbox-preview" style="color:rgba(255,255,255,0.7);">My order hasn't arrived — 2 weeks now. I need this resolved urgently.</div>
+              </div>
+              <div class="inbox-badge badge-urgent">HIGH</div>
+            </div>
+
+            <!-- AI Draft Box -->
+            <div style="margin:24px 0; padding:40px; background:rgba(0,201,167,0.08); border:1px solid rgba(0,201,167,0.2); border-radius:20px;">
+              <div style="font-size:0.6rem;color:var(--teal);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">🤖 AI Draft Reply</div>
+              <div style="font-size:0.75rem;color:rgba(255,255,255,0.75);line-height:1.8;">
+                Hi Sarah, I sincerely apologise for the delay. I've escalated your order (#OM-4821) to our logistics team and will have an update for you within 2 hours. As a token of our apology, I'd like to offer you a 15% discount on your next order...
+              </div>
+              <div style="margin-top:24px;display:flex;gap:20px;">
+                <div style="padding:12px 32px;background:var(--teal);color:var(--navy);border-radius:10px;font-size:0.65rem;font-weight:700;cursor:pointer;">✓ Send Now</div>
+                <div style="padding:12px 32px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);border-radius:10px;font-size:0.65rem;font-weight:700;cursor:pointer;">Edit Draft</div>
+              </div>
+            </div>
+
+            <div class="inbox-row">
+              <div class="inbox-ch">💬</div>
+              <div class="inbox-avatar" style="background:#B3D8FF; color:#003A70;">M</div>
+              <div class="inbox-meta">
+                <div class="inbox-sender">Marcus T. · WhatsApp · 15 min ago</div>
+                <div class="inbox-preview">Hey, can I reschedule my demo to Thursday?</div>
+              </div>
+              <div class="inbox-badge badge-ai">AI READY</div>
+            </div>
+            <div class="inbox-row">
+              <div class="inbox-ch">📸</div>
+              <div class="inbox-avatar" style="background:#FFE0B3; color:#5A3A00;">L</div>
+              <div class="inbox-meta">
+                <div class="inbox-sender">Lena R. · Instagram · 1 hr ago</div>
+                <div class="inbox-preview">Versenden Sie nach Deutschland? (Do you ship to Germany?)</div>
+              </div>
+              <div class="inbox-badge badge-ai">TRANSLATED</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">06 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 7 · FEATURES OVERVIEW
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-navy" style="padding-top:180px; padding-bottom:100px; justify-content:flex-start;">
+    <div class="blob blob-teal" style="width:800px;height:800px;bottom:-100px;right:-100px;opacity:0.1;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="width:100%; max-width:3400px; z-index:1; text-align:center;">
+      <div class="eyebrow">Features Deep-Dive</div>
+      <div class="h-xl text-white">One Inbox for Every Channel</div>
+      <div class="divider center"></div>
+
+      <div class="cards-grid cols-3" style="text-align:left;">
+        <div class="card">
+          <div class="card-icon icon-teal">📥</div>
+          <div class="card-title">Multichannel Inbox</div>
+          <p class="card-body">Email, WhatsApp, Instagram, Facebook, Telegram, Slack, Amazon — unified in one view. Switch channels without switching apps.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-blue">🧠</div>
+          <div class="card-title">AI Replies from Your Knowledge Base</div>
+          <p class="card-body">Train Ominbo on your docs, FAQs, and past tickets. Every AI draft reflects your actual processes and brand voice.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-gold">⚡</div>
+          <div class="card-title">Flow Send → Next</div>
+          <p class="card-body">Approve and move on. Ominbo automatically queues the next conversation — no clicking around, no lost messages.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-violet">🏷️</div>
+          <div class="card-title">Tags, Rules & Follow-ups</div>
+          <p class="card-body">Auto-tag by topic, source, or urgency. Set follow-up timers and escalation rules that actually understand message context.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-rose">🔔</div>
+          <div class="card-title">Priorities & Alerts</div>
+          <p class="card-body">AI surfaces genuinely urgent messages first. Get notified only for what matters — no more alert fatigue.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-teal">🌍</div>
+          <div class="card-title">Multilingual & Translated</div>
+          <p class="card-body">Messages auto-translated in real time. AI drafts replies in the customer's own language — automatically.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-blue">📸</div>
+          <div class="card-title">Swipe Triage</div>
+          <p class="card-body">Mobile-friendly swipe actions for power users. Handle a backlog in minutes instead of hours.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-gold">📈</div>
+          <div class="card-title">Learning Sorting</div>
+          <p class="card-body">Ominbo learns your behaviour over time, improving how it sorts and prioritises every week.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon icon-violet">📅</div>
+          <div class="card-title">Calendar Connected</div>
+          <p class="card-body">Link your calendar to book meetings directly from conversations — Ominbo handles scheduling context automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">07 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 8 · BEFORE & AFTER
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-ink">
+    <div class="blob blob-gold" style="width:700px;height:700px;top:0;right:0;opacity:0.07;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="width:100%; max-width:3200px; z-index:1;">
+      <div style="text-align:center; margin-bottom:0;">
+        <div class="eyebrow">The Transformation</div>
+        <div class="h-xl text-white">Before vs. After Ominbo</div>
+        <div class="divider center"></div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-col">
+          <div class="compare-head" style="color:#F87171;">
+            ✕ &nbsp;Without Ominbo
+          </div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> Switching between 5–7 different apps every hour</div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> Writing the same replies from scratch, every single day</div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> Urgent messages buried under low-priority noise</div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> No context on who the customer is or their history</div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> New agents take days to ramp — no knowledge system</div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> Language barriers slow response time for global customers</div>
+          <div class="compare-item"><span class="px" style="flex-shrink:0;">✕</span> No data on team response times or bottlenecks</div>
+        </div>
+        <div class="compare-col highlight">
+          <div class="compare-head" style="color:var(--teal);">
+            ✓ &nbsp;With Ominbo
+          </div>
+          <div class="compare-item"><span class="check-big">✓</span> One inbox, every channel — from a single tab</div>
+          <div class="compare-item"><span class="check-big">✓</span> AI drafts personalised replies from your knowledge base in seconds</div>
+          <div class="compare-item"><span class="check-big">✓</span> AI priority scoring surfaces urgent threads instantly</div>
+          <div class="compare-item"><span class="check-big">✓</span> Full customer history and channel context in every thread</div>
+          <div class="compare-item"><span class="check-big">✓</span> New agents productive on day one — AI knows the answers</div>
+          <div class="compare-item"><span class="check-big">✓</span> Auto-translate and reply in any language automatically</div>
+          <div class="compare-item"><span class="check-big">✓</span> Live analytics on response times, SLAs, and team performance</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">08 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 9 · KNOWLEDGE BASE
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-navy">
+    <div class="blob blob-teal" style="width:900px;height:900px;bottom:-200px;left:-100px;opacity:0.12;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div class="split" style="z-index:1; max-width:3400px; width:100%;">
+      <div>
+        <div class="eyebrow">AI Core</div>
+        <div class="h-xl text-white">AI That Knows <span class="hi">Your</span> Business</div>
+        <div class="divider"></div>
+        <p class="body-lg" style="margin-bottom:64px;">Feed Ominbo your product docs, return policies, FAQs, and past email threads. The AI learns your voice, your rules, and your answers — then drafts replies that sound exactly like your best agent.</p>
+        <ul class="problem-list">
+          <li><span class="check-big">✓</span> Upload PDFs, website URLs, Google Docs, or paste raw text</li>
+          <li><span class="check-big">✓</span> AI continuously improves from approved replies</li>
+          <li><span class="check-big">✓</span> Set confidence thresholds — high confidence auto-sends, lower confidence routes to a human</li>
+          <li><span class="check-big">✓</span> Works across all 7+ channels simultaneously</li>
+        </ul>
+      </div>
+      <div>
+        <div style="background:rgba(0,201,167,0.06); border:1px solid rgba(0,201,167,0.18); border-radius:32px; padding:72px 64px;">
+          <div style="font-size:0.65rem;color:var(--teal);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:48px;">Knowledge Base Sources</div>
+          <div style="display:flex;flex-direction:column;gap:28px;">
+            <div style="display:flex;align-items:center;gap:32px;padding:32px;background:rgba(255,255,255,0.05);border-radius:16px;">
+              <div style="font-size:1.5rem;">📄</div>
+              <div>
+                <div style="font-size:0.8rem;font-weight:600;color:var(--white);">Policy Documents</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:6px;">Returns, shipping, refund policies</div>
+              </div>
+              <div class="inbox-badge badge-done" style="margin-left:auto;">TRAINED</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:32px;padding:32px;background:rgba(255,255,255,0.05);border-radius:16px;">
+              <div style="font-size:1.5rem;">🌐</div>
+              <div>
+                <div style="font-size:0.8rem;font-weight:600;color:var(--white);">Help Centre / FAQ Pages</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:6px;">Product info, how-to guides</div>
+              </div>
+              <div class="inbox-badge badge-done" style="margin-left:auto;">TRAINED</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:32px;padding:32px;background:rgba(255,255,255,0.05);border-radius:16px;">
+              <div style="font-size:1.5rem;">📧</div>
+              <div>
+                <div style="font-size:0.8rem;font-weight:600;color:var(--white);">Past Email Threads</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:6px;">Your best historical responses</div>
+              </div>
+              <div class="inbox-badge badge-done" style="margin-left:auto;">TRAINED</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:32px;padding:32px;background:rgba(255,255,255,0.05);border-radius:16px;">
+              <div style="font-size:1.5rem;">📋</div>
+              <div>
+                <div style="font-size:0.8rem;font-weight:600;color:var(--white);">SOPs & Brand Guidelines</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-top:6px;">Tone of voice, escalation rules</div>
+              </div>
+              <div class="inbox-badge badge-ai" style="margin-left:auto;">SYNCING</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">09 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 10 · MULTILINGUAL
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-teal-grad">
+    <div class="blob blob-blue" style="width:900px;height:900px;top:-200px;right:-100px;opacity:0.15;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="text-align:center; z-index:1; max-width:2800px;">
+      <div class="eyebrow">Global-Ready</div>
+      <div class="h-xl text-white">Serve <span class="hi">Every Customer</span>,<br>in Their Language</div>
+      <div class="divider center"></div>
+      <p class="body-lg" style="text-align:center; margin:0 auto 80px; max-width:2000px;">
+        A customer writes in German. Ominbo detects the language, translates it for your team, drafts a reply in German, and auto-translates your knowledge base to match — all before you even open the thread.
+      </p>
+
+      <div class="cards-grid cols-4" style="text-align:left; margin-top:60px;">
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2.5rem; margin-bottom:24px;">🇩🇪</div>
+          <div class="card-title">German</div>
+          <p class="card-body" style="font-size:0.7rem;">"Versenden Sie nach Deutschland?"</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2.5rem; margin-bottom:24px;">🇫🇷</div>
+          <div class="card-title">French</div>
+          <p class="card-body" style="font-size:0.7rem;">"Quel est le délai de livraison?"</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2.5rem; margin-bottom:24px;">🇪🇸</div>
+          <div class="card-title">Spanish</div>
+          <p class="card-body" style="font-size:0.7rem;">"¿Pueden enviar a México?"</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-size:2.5rem; margin-bottom:24px;">🌍</div>
+          <div class="card-title">50+ Languages</div>
+          <p class="card-body" style="font-size:0.7rem;">Auto-detected & auto-replied in the customer's language</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">10 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 11 · TESTIMONIALS
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-ink">
+    <div class="blob blob-teal" style="width:700px;height:700px;top:0;right:0;opacity:0.1;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="width:100%; max-width:3400px; z-index:1;">
+      <div style="text-align:center; margin-bottom:0;">
+        <div class="eyebrow">What Early Users Say</div>
+        <div class="h-xl text-white">Real People. Real Results.</div>
+        <div class="divider center"></div>
+        <p class="body-lg" style="text-align:center; max-width:1800px; margin:0 auto 20px;">A hand-tested early community from people who set up their inbox with us.</p>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"We used to check three different apps every morning. With Ominbo, it's all there in one place. The AI replies save us around 2 hours daily — and the suggested styles just put a really skilled drafter on our team."</div>
+          <div class="testi-author">
+            <div class="testi-avatar" style="background:var(--teal);">LM</div>
+            <div>
+              <div class="testi-name">Laura M.</div>
+              <div class="testi-role">Support Lead · E-commerce</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"You won't actually understand how much time it saves until you try a small inbox sprint. Ominbo handled 300 messages in an afternoon — I just approved. That's completely changed how we think about scale."</div>
+          <div class="testi-author">
+            <div class="testi-avatar" style="background:#2563EB;">TK</div>
+            <div>
+              <div class="testi-name">Tobias K.</div>
+              <div class="testi-role">Founder · SaaS Startup</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"As a solo Etsy/Amazon strategy owner, everything overwhelming me around managing my inbox — updating my status in the knowing everything outstanding. Ominbo is the first tool that actually surfaced critical replies."</div>
+          <div class="testi-author">
+            <div class="testi-avatar" style="background:#F59E0B;">SE</div>
+            <div>
+              <div class="testi-name">Sofia E.</div>
+              <div class="testi-role">Solo Seller · Marketplace Strategy</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">"We run a partnership to do magic in drafts — drafts, headlines, AI that is organised from all our docs admittedly from all too. Ominbo pulled from all that context."</div>
+          <div class="testi-author">
+            <div class="testi-avatar" style="background:#8B5CF6;">JP</div>
+            <div>
+              <div class="testi-name">James P.</div>
+              <div class="testi-role">Customer Success · Enterprise</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card" style="grid-column:2; display:flex; flex-direction:column; justify-content:center; align-items:center; border-color:rgba(0,201,167,0.2); background:rgba(0,201,167,0.05);">
+          <div style="font-family:'Sora',sans-serif; font-size:2.8rem; font-weight:800; color:var(--teal); line-height:1; margin-bottom:20px;">4.9/5</div>
+          <div style="color:var(--gold); font-size:1.5rem; letter-spacing:4px; margin-bottom:20px;">★★★★★</div>
+          <div style="font-size:0.75rem; color:rgba(255,255,255,0.5); text-align:center;">Average rating from<br>early access users</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">11 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 12 · PRICING
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-navy" style="padding-top:180px; padding-bottom:100px; justify-content:flex-start;">
+    <div class="blob blob-blue" style="width:700px;height:700px;bottom:0;right:0;opacity:0.1;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="width:100%; max-width:3200px; z-index:1; text-align:center;">
+      <div class="eyebrow">Fair Pricing — Per Project</div>
+      <div class="h-xl text-white">Simple Pricing. No Surprises.</div>
+      <div class="divider center"></div>
+      <p class="body-lg" style="text-align:center; max-width:1800px; margin:0 auto 40px;">All plans include AI for the Inbox. No paying extra just to unlock the most important feature.</p>
+
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="price-card">
+          <div class="price-tier">Free Trial</div>
+          <div class="price-amount">$0</div>
+          <div class="price-period">14 days free</div>
+          <div class="price-feature"><span class="check">✓</span> Up to 50 AI emails</div>
+          <div class="price-feature"><span class="check">✓</span> 1 project</div>
+          <div class="price-feature"><span class="check">✓</span> All basic features</div>
+          <div class="price-feature"><span class="check">✓</span> No credit card needed</div>
+        </div>
+
+        <!-- Starter (featured) -->
+        <div class="price-card featured">
+          <div class="price-badge">MOST POPULAR</div>
+          <div class="price-tier">Starter</div>
+          <div class="price-amount">$20</div>
+          <div class="price-period">per month</div>
+          <div class="price-feature"><span class="check">✓</span> 7 projects</div>
+          <div class="price-feature"><span class="check">✓</span> 3 agents / box starters</div>
+          <div class="price-feature"><span class="check">✓</span> 1,000 AI-generated emails / month</div>
+          <div class="price-feature"><span class="check">✓</span> Rules + AI filters</div>
+          <div class="price-feature"><span class="check">✓</span> Priority support</div>
+        </div>
+
+        <!-- Pro -->
+        <div class="price-card">
+          <div class="price-tier">Pro</div>
+          <div class="price-amount">$50</div>
+          <div class="price-period">per month</div>
+          <div class="price-feature"><span class="check">✓</span> 10 mailbox limit</div>
+          <div class="price-feature"><span class="check">✓</span> Unlimited projects</div>
+          <div class="price-feature"><span class="check">✓</span> Unlimited agents</div>
+          <div class="price-feature"><span class="check">✓</span> 5,000 AI emails / month</div>
+          <div class="price-feature"><span class="check">✓</span> Analytics & reports</div>
+          <div class="price-feature"><span class="check">✓</span> Priority support</div>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="price-card">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-amount">$5,000</div>
+          <div class="price-period">custom / month</div>
+          <div class="price-feature"><span class="check">✓</span> Custom volume pricing</div>
+          <div class="price-feature"><span class="check">✓</span> Dedicated account manager</div>
+          <div class="price-feature"><span class="check">✓</span> Private cloud or on-premise</div>
+          <div class="price-feature"><span class="check">✓</span> SLA &amp; compliance</div>
+          <div class="price-feature"><span class="check">✓</span> Custom onboarding</div>
+        </div>
+      </div>
+
+      <div style="margin-top:60px; padding:40px 80px; background:rgba(0,201,167,0.08); border:1px solid rgba(0,201,167,0.18); border-radius:20px; display:inline-flex; align-items:center; gap:40px;">
+        <span style="font-size:1.3rem;">🎁</span>
+        <span style="font-size:0.85rem; color:rgba(255,255,255,0.8); font-weight:500;"><strong style="color:var(--teal);">Webinar Exclusive:</strong> Start free — no credit card needed. Upgrade anytime. 30-day money-back guarantee on all paid plans.</span>
+      </div>
+    </div>
+
+    <div class="slide-num">12 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 13 · WHY NOW / URGENCY
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-ink">
+    <div class="blob blob-teal" style="width:900px;height:900px;top:-200px;left:-200px;opacity:0.12;"></div>
+    <div class="blob blob-gold" style="width:600px;height:600px;bottom:-100px;right:-100px;opacity:0.08;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div style="z-index:1; text-align:center; max-width:2800px;">
+      <div class="eyebrow">Why Act Now</div>
+      <div class="h-xl text-white">Every Hour You Wait<br>Costs You <span class="hi">Replies, Revenue & Reputation</span></div>
+      <div class="divider center"></div>
+      <p class="body-lg" style="text-align:center; margin:0 auto 80px; max-width:2000px;">
+        The average team spends <strong style="color:var(--white)">3–4 hours daily</strong> just managing inboxes. With Ominbo, that drops to under 30 minutes. That's 15+ hours per week, per agent — given back to work that actually grows your business.
+      </p>
+
+      <div class="cards-grid cols-3" style="text-align:center;">
+        <div class="card" style="text-align:center;">
+          <div style="font-family:'Sora',sans-serif; font-size:3rem; font-weight:800; color:var(--teal); margin-bottom:24px;">15+</div>
+          <div class="card-title">Hours saved per agent weekly</div>
+          <p class="card-body">Less time in your inbox. More time building product, closing deals, and serving customers.</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-family:'Sora',sans-serif; font-size:3rem; font-weight:800; color:var(--gold); margin-bottom:24px;">&lt;2 min</div>
+          <div class="card-title">Setup to first AI reply</div>
+          <p class="card-body">Connect your inbox, paste your FAQs, and Ominbo is drafting replies in under 2 minutes.</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-family:'Sora',sans-serif; font-size:3rem; font-weight:800; color:#60A5FA; margin-bottom:24px;">$0</div>
+          <div class="card-title">Cost to get started</div>
+          <p class="card-body">14-day free trial, no credit card. Experience the full AI inbox before spending a cent.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">13 / 14</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 14 · CLOSING / CTA
+  ═══════════════════════════════════════ -->
+  <section class="slide bg-teal-grad">
+    <div class="blob blob-teal" style="width:1500px;height:1500px;top:-400px;right:-400px;opacity:0.2;"></div>
+    <div class="blob blob-blue" style="width:1000px;height:1000px;bottom:-300px;left:-300px;opacity:0.15;"></div>
+
+    <div class="logo-mark">
+      <div class="logo-icon">O</div>
+      <div class="logo-text">ominbo<span>.</span></div>
+    </div>
+
+    <div class="closing-center" style="z-index:1;">
+      <div class="eyebrow">Let the AI Take Over Your Inbox</div>
+      <div class="h-hero text-white" style="margin-bottom:48px;">
+        Start Free Today.<br>
+        <span class="hi">No Card Required.</span>
+      </div>
+      <p class="body-lg" style="text-align:center; margin:0 auto; max-width:2000px;">
+        Connect your first mailbox in under 2 minutes and let Ominbo's AI automatically sort, draft and reply — with you in full control.
+      </p>
+
+      <div style="margin-top:80px; display:flex; justify-content:center; gap:48px; flex-wrap:wrap; align-items:center;">
+        <div class="cta">Start for Free → <span class="cta-arrow">✈️</span></div>
+        <div style="font-size:0.85rem; color:rgba(255,255,255,0.5); text-align:left; line-height:1.7;">
+          ✓ No credit card &nbsp;&nbsp; ✓ 14-day free trial<br>
+          ✓ Cancel anytime &nbsp;&nbsp; ✓ Setup in &lt; 2 min
+        </div>
+      </div>
+
+      <div class="big-url">ominbo.com</div>
+
+      <div style="margin-top:80px; display:flex; justify-content:center; gap:64px; flex-wrap:wrap;">
+        <div style="padding:28px 56px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:20px; font-size:0.75rem; color:rgba(255,255,255,0.6); text-align:center;">
+          <div style="font-size:1.2rem; margin-bottom:12px;">📧</div>
+          Questions?<br><strong style="color:var(--white);">hello@ominbo.com</strong>
+        </div>
+        <div style="padding:28px 56px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:20px; font-size:0.75rem; color:rgba(255,255,255,0.6); text-align:center;">
+          <div style="font-size:1.2rem; margin-bottom:12px;">💬</div>
+          WhatsApp Support<br><strong style="color:var(--white);">Available 7 days/week</strong>
+        </div>
+        <div style="padding:28px 56px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:20px; font-size:0.75rem; color:rgba(255,255,255,0.6); text-align:center;">
+          <div style="font-size:1.2rem; margin-bottom:12px;">🔗</div>
+          Follow Updates<br><strong style="color:var(--white);">@ominbo</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">14 / 14</div>
+  </section>
+
+</div>
+</body>
+</html>
